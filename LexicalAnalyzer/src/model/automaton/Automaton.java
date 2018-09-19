@@ -3,6 +3,8 @@
  */
 package model.automaton;
 
+import model.automaton.number.NumberStates;
+
 /**
  * Classe que representa o autômato a ser utilizado durante a análise léxica dos caracteres
  * de entrada.
@@ -16,11 +18,14 @@ public class Automaton {
 	/** Estado atual do autômato **/
 	private State currentState;
 	
+	/** Estado inicial do autômato **/
+	private State initialState;
+	
 	/**
 	 * Obtém uma instância do autômato.
 	 */
-	public Automaton() {
-		currentState = States.STATE_BEGIN;
+	public Automaton(State initialState) {
+		currentState = initialState;
 	}
 	
 	
@@ -33,7 +38,7 @@ public class Automaton {
 	
 	/**
 	 * Configura o próximo estado do autômato de acordo com o caractere.
-	 * @param character
+	 * @param character próximo caractere
 	 */
 	public void next(char character) {
 		currentState = currentState.next(character);
@@ -48,10 +53,10 @@ public class Automaton {
 	}
 	
 	/**
-	 * Reinicia o autômato
+	 * Reinicia o autômato.
 	 */
 	public void reset() {
-		currentState = States.STATE_BEGIN;
+		currentState = initialState;
 	}
 
 
