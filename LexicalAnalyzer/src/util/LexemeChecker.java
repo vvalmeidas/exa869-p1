@@ -17,6 +17,7 @@ public class LexemeChecker {
 	private static String REGEX_ARITHMETIC_OPERATOR = "\\+|-|\\*|/|\\+\\+|--";
 	private static String REGEX_RELATIONAL_OPERATOR = "!=|==|<|<=|>|>=|=";
 	private static String REGEX_DELIMITER = "\\;|\\,|\\(|\\)|\\[|\\]|\\{|\\}|\\.";
+	private static String REGEX_DELIMITERWITHOUTPOINT = "\\;|\\,|\\(|\\)|\\[|\\]|\\{|\\}";
 	
 	
 	/**
@@ -48,7 +49,7 @@ public class LexemeChecker {
 	 */
 	public static boolean isNumberDelimiter(char character) {
 		String string = String.valueOf(character);
-		return string.matches(REGEX_DELIMITER) || string.matches(REGEX_ARITHMETIC_OPERATOR) || string.matches(REGEX_RELATIONAL_OPERATOR) || string.matches(REGEX_LOGICAL_OPERATOR);
+		return character == '\r' || character == ' ' || string.matches(REGEX_DELIMITERWITHOUTPOINT) || string.matches(REGEX_ARITHMETIC_OPERATOR) || string.matches(REGEX_RELATIONAL_OPERATOR) || string.matches(REGEX_LOGICAL_OPERATOR);
 	}
 
 }

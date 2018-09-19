@@ -42,22 +42,8 @@ public enum NumberStates implements State {
 				return NumberFinalStates.CORRECTNUMBER_FINALSTATE;
 			}
 
-			return NumberFinalStates.BADLYFORMEDNUMBER_FINALSTATE;
+			return BADLYFORMEDNUMBER_STATE;
 			
-		}
-		
-	},
-	AFTERDOT_STATE {
-
-		@Override
-		public State next(char character) {
-			if(LexemeChecker.isDigit(character)) {
-				return DIGIT_STATE;
-			} if(LexemeChecker.isNumberDelimiter(character)) {
-				return NumberFinalStates.CORRECTNUMBER_FINALSTATE;
-			}
-
-			return NumberFinalStates.BADLYFORMEDNUMBER_FINALSTATE;
 		}
 		
 	},
@@ -72,6 +58,32 @@ public enum NumberStates implements State {
 			}
 			
 			return NumberFinalStates.NOTNUMBER_FINALSTATE;
+		}
+		
+	},
+	AFTERDOT_STATE {
+
+		@Override
+		public State next(char character) {
+			if(LexemeChecker.isDigit(character)) {
+				return AFTERDOT_STATE;
+			} if(LexemeChecker.isNumberDelimiter(character)) {
+				return NumberFinalStates.CORRECTNUMBER_FINALSTATE;
+			}
+
+			return BADLYFORMEDNUMBER_STATE;
+		}
+		
+	},
+	BADLYFORMEDNUMBER_STATE {
+
+		@Override
+		public State next(char character) {
+			if(LexemeChecker.isNumberDelimiter(character)) {
+				return NumberFinalStates.BADLYFORMEDNUMBER_FINALSTATE;
+			}
+			
+			return BADLYFORMEDNUMBER_STATE;
 		}
 		
 	}
