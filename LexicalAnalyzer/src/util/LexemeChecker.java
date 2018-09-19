@@ -14,6 +14,7 @@ public class LexemeChecker {
 	
 	private static String REGEX_DIGIT = "[\\d]";
 	private static String REGEX_LETTER = "[a-zA-Z]";
+	private static String REGEX_UNDERLINE = "_";
 	private static String REGEX_LOGICAL_OPERATOR = "!|&&|\\|\\|";
 	private static String REGEX_ARITHMETIC_OPERATOR = "\\+|-|\\*|/|\\+\\+|--";
 	private static String REGEX_RELATIONAL_OPERATOR = "!=|==|<|<=|>|>=|=";
@@ -72,6 +73,17 @@ public class LexemeChecker {
 	public static boolean isIdentifierDelimiter(char character) {
 		String string = String.valueOf(character);
 		return string.matches(REGEX_DELIMITER);
+	}
+	
+	/**
+	 * Determina se o caractere lido é um underline.
+	 * 
+	 * @param character
+	 * @return
+	 */
+	public static boolean isUnderline(char character) {
+		String string = String.valueOf(character);
+		return string.matches(REGEX_UNDERLINE);
 	}
 
 }

@@ -35,7 +35,13 @@ public enum IdentifierStates implements State{
 
 		@Override
 		public State next(char character) {
-			return null;
+			if(LexemeChecker.isLetter(character) || LexemeChecker.isDigit(character) || LexemeChecker.isUnderline(character)) {
+				return LETTER_STATE;
+			} else if(LexemeChecker.isIdentifierDelimiter(character)){
+				return IdentifierFinalStates.CORRECTIDENTIFIER_FINALSTATE;
+			}
+			
+			return IdentifierFinalStates.BADLYFORMEDIDENTIFIER_FINALSTATE;
 		}
 		
 	},
