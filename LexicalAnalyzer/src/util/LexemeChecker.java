@@ -13,9 +13,15 @@ package util;
 public class LexemeChecker {
 	
 	private static String REGEX_DIGIT = "[\\d]";
+	private static String REGEX_LOGICAL_OPERATOR = "!|&&|\\|\\|";
+	private static String REGEX_ARITHMETIC_OPERATOR = "\\+|-|\\*|/|\\+\\+|--";
+	private static String REGEX_RELATIONAL_OPERATOR = "!=|==|<|<=|>|>=|=";
+	private static String REGEX_DELIMITER = "\\;|\\,|\\(|\\)|\\[|\\]|\\{|\\}|\\.";
+	
 	
 	/**
 	 * Verifica se a entrada é um dígito válido.
+	 * 
 	 * @param input entrada a ser verificada
 	 * @return true, se o a entrada for um dígito; falso, caso contrário
 	 */
@@ -25,17 +31,24 @@ public class LexemeChecker {
 	
 	/**
 	 * Verifica se a entrada é um dígito válido.
+	 * 
 	 * @param character entrada a ser verificada
 	 * @return true, se o a entrada for um dígito; falso, caso contrário
 	 */
 	public static boolean isDigit(char character) {
-		String inputString = String.valueOf(character);
-		return inputString.matches(REGEX_DIGIT);
+		String string = String.valueOf(character);
+		return string.matches(REGEX_DIGIT);
 	}
 	
+	/**
+	 * Determina se o caractere lido é um delimitador para um número.
+	 * 
+	 * @param character entrada a ser verificada
+	 * @return true, se o caractere for um delimitador para um número; falso, caso contrário
+	 */
 	public static boolean isNumberDelimiter(char character) {
-		return false;
-		
+		String string = String.valueOf(character);
+		return string.matches(REGEX_DELIMITER) || string.matches(REGEX_ARITHMETIC_OPERATOR) || string.matches(REGEX_RELATIONAL_OPERATOR) || string.matches(REGEX_LOGICAL_OPERATOR);
 	}
 
 }

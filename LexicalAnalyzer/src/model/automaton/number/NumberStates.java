@@ -21,12 +21,43 @@ public enum NumberStates implements State {
 		@Override
 		public State next(char character) {
 			if(LexemeChecker.isDigit(character)) {
-				return NumberFinalStates.NUMBER_FINALSTATE;
+				return DIGIT_STATE;
 			} else if(character == '-'){
 				return NEGATIVESPACES_STATE;
 			}
 			
 			return NumberFinalStates.NOTNUMBER_FINALSTATE;
+		}
+		
+	},
+	DIGIT_STATE {
+
+		@Override
+		public State next(char character) {
+			if(LexemeChecker.isDigit(character)) {
+				return DIGIT_STATE;
+			} else if(character == '.') {
+				return AFTERDOT_STATE;
+			} else if(LexemeChecker.isNumberDelimiter(character)) {
+				return NumberFinalStates.CORRECTNUMBER_FINALSTATE;
+			}
+
+			return NumberFinalStates.BADLYFORMEDNUMBER_FINALSTATE;
+			
+		}
+		
+	},
+	AFTERDOT_STATE {
+
+		@Override
+		public State next(char character) {
+			if(LexemeChecker.isDigit(character)) {
+				return DIGIT_STATE;
+			} if(LexemeChecker.isNumberDelimiter(character)) {
+				return NumberFinalStates.CORRECTNUMBER_FINALSTATE;
+			}
+
+			return NumberFinalStates.BADLYFORMEDNUMBER_FINALSTATE;
 		}
 		
 	},
@@ -37,10 +68,10 @@ public enum NumberStates implements State {
 			if(character == ' ') {
 				return NEGATIVESPACES_STATE;
 			} else if(LexemeChecker.isDigit(character)) {
-				
+				return DIGIT_STATE;
 			}
 			
-			return null;
+			return NumberFinalStates.NOTNUMBER_FINALSTATE;
 		}
 		
 	}

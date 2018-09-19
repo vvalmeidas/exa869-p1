@@ -16,11 +16,12 @@ import util.LexemeChecker;
  */
 public enum NumberFinalStates implements FinalState {
 	
-	NUMBER_FINALSTATE {
+	CORRECTNUMBER_FINALSTATE {
 
 		@Override
 		public State next(char character) {
-			return NUMBER_FINALSTATE;
+			
+			return CORRECTNUMBER_FINALSTATE;
 		}
 		
 	},
@@ -29,6 +30,14 @@ public enum NumberFinalStates implements FinalState {
 		@Override
 		public State next(char character) {
 			return NOTNUMBER_FINALSTATE;
+		}
+		
+	},
+	BADLYFORMEDNUMBER_FINALSTATE {
+
+		@Override
+		public State next(char character) {
+			return BADLYFORMEDNUMBER_FINALSTATE;
 		}
 		
 	}
