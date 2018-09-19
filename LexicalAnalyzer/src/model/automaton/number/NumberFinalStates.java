@@ -5,7 +5,6 @@ package model.automaton.number;
 
 import model.automaton.FinalState;
 import model.automaton.State;
-import util.LexemeChecker;
 
 /**
  * Enumeração com os estados finais possíveis para o autômato.
