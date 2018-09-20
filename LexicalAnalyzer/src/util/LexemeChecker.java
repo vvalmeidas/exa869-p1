@@ -15,7 +15,7 @@ public class LexemeChecker {
 	private static String REGEX_DIGIT = "[\\d]";
 	private static String REGEX_LETTER = "[a-zA-Z]";
 	private static String REGEX_UNDERLINE = "_";
-	private static String REGEX_LOGICAL_OPERATOR = "!|&&|\\|\\|";
+	private static String REGEX_LOGIC_OPERATOR = "!|&&|\\|\\|";
 	private static String REGEX_ARITHMETIC_OPERATOR = "\\+|-|\\*|/|\\+\\+|--";
 	private static String REGEX_RELATIONAL_OPERATOR = "!=|==|<|<=|>|>=|=";
 	private static String REGEX_DELIMITER = "\\;|\\,|\\(|\\)|\\[|\\]|\\{|\\}|\\.";
@@ -51,7 +51,7 @@ public class LexemeChecker {
 	 */
 	public static boolean isNumberDelimiter(char character) {
 		String string = String.valueOf(character);
-		return character == '\r' || character == ' ' || string.matches(REGEX_DELIMITERWITHOUTPOINT) || string.matches(REGEX_ARITHMETIC_OPERATOR) || string.matches(REGEX_RELATIONAL_OPERATOR) || string.matches(REGEX_LOGICAL_OPERATOR);
+		return character == '\r' || character == ' ' || string.matches(REGEX_DELIMITERWITHOUTPOINT) || string.matches(REGEX_ARITHMETIC_OPERATOR) || string.matches(REGEX_RELATIONAL_OPERATOR) || string.matches(REGEX_LOGIC_OPERATOR);
 	}
 
 	/**
@@ -107,6 +107,17 @@ public class LexemeChecker {
 	public static boolean isDelimiter(char character) {
 		String string = String.valueOf(character);
 		return string.matches(REGEX_DELIMITER);
+	}
+	
+	/**
+	 * Determina se o caractere lido é um operador lógico.
+	 * 
+	 * @param character entrada a ser verificada
+	 * @return true, se o caractere for um operador lógico; falso, caso contrário
+	 */
+	public static boolean isLogicOperator(char character) {
+		String string = String.valueOf(character);
+		return string.matches(REGEX_LOGIC_OPERATOR);
 	}
 
 }

@@ -13,20 +13,20 @@ import model.automaton.State;
  * @author Valmir Vinicius
  *
  */
-public enum ArithmeticOperatorFinalStates implements FinalState {
-	CORRECT_ARITHMETIC_OPERATOR_FINALSTATE {
+public enum ArithmeticFinalStates implements FinalState {
+	CORRECTARITHMETIC_FINALSTATE {
 
 		@Override
 		public State next(char character) {
-			return CORRECT_ARITHMETIC_OPERATOR_FINALSTATE;
+			return CORRECTARITHMETIC_FINALSTATE;
 		}
 		
 	},
-	NOT_ARITHMETIC_OPERATOR_FINALSTATE {
+	NOTARITHMETIC_FINALSTATE {
 
 		@Override
 		public State next(char character) {
-			return NOT_ARITHMETIC_OPERATOR_FINALSTATE;
+			return NOTARITHMETIC_FINALSTATE;
 		}
 		
 	}

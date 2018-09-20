@@ -3,8 +3,12 @@ import java.util.Map;
 
 import controller.FileController;
 import model.automaton.Automaton;
-import model.automaton.arithmetic_operator.ArithmeticOperatorFinalStates;
-import model.automaton.arithmetic_operator.ArithmeticOperatorStates;
+import model.automaton.arithmetic_operator.ArithmeticFinalStates;
+import model.automaton.arithmetic_operator.ArithmeticStates;
+import model.automaton.delimiters.DelimitersFinalStates;
+import model.automaton.delimiters.DelimitersStates;
+import model.automaton.logic_operators.LogicFinalStates;
+import model.automaton.logic_operators.LogicStates;
 import model.automaton.number.NumberFinalStates;
 import model.automaton.number.NumberStates;
 
@@ -16,7 +20,7 @@ public class Main {
 		FileController.saveFile("arq1.txt", "a" + System.lineSeparator() + "b");
 		
 		char[] chars = s.toCharArray();
-		Automaton a = new Automaton(NumberStates.NUMBERINITIAL_STATE);
+		Automaton a = new Automaton(LogicStates.LOGIC_INICIAL_STATE);
 		LinkedList<Character> list = new LinkedList<Character>();
 
 
@@ -25,15 +29,13 @@ public class Main {
 			list.add(chars[i]);
 			
 			if(a.isFinalState()) {
-				if(a.getCurrentState() != NumberFinalStates.NOTNUMBER_FINALSTATE) {
+				if(a.getCurrentState() != LogicFinalStates.NOTLOGIC_FINALSTATE) {
 					list.remove(list.size() - 1);
 					i--;
 				}
-				
 				System.out.println(a.getCurrentState() + list.toString());
-				a.reset();
+				a = new Automaton(LogicStates.LOGIC_INICIAL_STATE);
 				list.clear();
-
 			}
 		}
 

@@ -21,11 +21,19 @@ public enum DelimitersStates implements State {
 		@Override
 		public State next(char character) {
 			if(LexemeChecker.isDelimiter(character)) {
-				return DelimitersFinalStates.CORRECTDELIMITER_FINALSTATE;
+				return CORRECTDELIMITER_STATE;
 			}
 			
 			return DelimitersFinalStates.NOTDELIMITER_FINALSTATE;
 			
+		}
+		
+	},
+	CORRECTDELIMITER_STATE {
+
+		@Override
+		public State next(char character) {
+			return DelimitersFinalStates.CORRECTDELIMITER_FINALSTATE;
 		}
 		
 	}

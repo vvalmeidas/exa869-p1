@@ -16,7 +16,7 @@ import util.LexemeChecker;
  */
 public enum NumberStates implements State {
 	
-	NUMBERINITIAL_STATE {
+	NUMBER_INITIAL_STATE {
 
 		@Override
 		public State next(char character) {
