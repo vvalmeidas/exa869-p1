@@ -4,7 +4,6 @@
 package model.automaton.relational_operator;
 
 import model.automaton.State;
-import model.automaton.arithmetic_operator.ArithmeticOperatorFinalStates;
 import util.LexemeChecker;
 
 /**
