@@ -20,6 +20,8 @@ public class LexemeChecker {
 	private static String REGEX_RELATIONAL_OPERATOR = "!=|==|<|<=|>|>=|=";
 	private static String REGEX_DELIMITER = "\\;|\\,|\\(|\\)|\\[|\\]|\\{|\\}|\\.";
 	private static String REGEX_DELIMITERWITHOUTPOINT = "\\;|\\,|\\(|\\)|\\[|\\]|\\{|\\}";
+	private static String REGEX_COMMENT_DELIMITER = "//";
+	private static String REGEX_BLOCK_COMMENT_DELIMITER = "/*|*/";
 	
 	
 	/**
@@ -129,6 +131,28 @@ public class LexemeChecker {
 	public static boolean isRelationalOperator(char character) {
 		String string = String.valueOf(character);
 		return string.matches(REGEX_RELATIONAL_OPERATOR);
+	}
+
+	/**
+	 * Determina se o caractere lido é um delimitador de comentário de linha
+	 * 
+	 * @param character entrada a ser verificada
+	 * @return true se o caractere for um delimitador de comentário, caso contrário retorna false
+	 */
+	public static boolean isCommentDelimiter(char character) {
+		String string = String.valueOf(character);
+		return string.matches(REGEX_COMMENT_DELIMITER);
+	}
+	
+	/**
+	 * Determina se o caractere lido é um delimitador de comentário de bloco
+	 * 
+	 * @param character entrada a ser verificada
+	 * @return true se o caractere for um delimitador de comentário, caso contrário retorna false
+	 */
+	public static boolean isBlockCommentDelimiter(char character) {
+		String string = String.valueOf(character);
+		return string.matches(REGEX_BLOCK_COMMENT_DELIMITER);
 	}
 
 }
