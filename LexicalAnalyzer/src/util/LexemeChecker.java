@@ -57,8 +57,8 @@ public class LexemeChecker {
 	/**
 	 * Determina se o caractere lido é uma letra.
 	 * 
-	 * @param character
-	 * @return
+	 * @param character entrada a ser verificada
+	 * @return true se o caractere for uma letra
 	 */
 	public static boolean isLetter(char character) {
 		String string = String.valueOf(character);
@@ -68,8 +68,8 @@ public class LexemeChecker {
 	/**
 	 * Determina se o caractere lido é um delimitador para identificadores.
 	 * 
-	 * @param character
-	 * @return
+	 * @param character entrada a ser verificada
+	 * @return true se o caractere for um delimitador para identificadores
 	 */
 	public static boolean isIdentifierDelimiter(char character) {
 		String string = String.valueOf(character);
@@ -79,8 +79,8 @@ public class LexemeChecker {
 	/**
 	 * Determina se o caractere lido é um underline.
 	 * 
-	 * @param character
-	 * @return
+	 * @param character entrada a ser verificada
+	 * @return true se o caractere for um underline
 	 */
 	public static boolean isUnderline(char character) {
 		String string = String.valueOf(character);
@@ -118,6 +118,17 @@ public class LexemeChecker {
 	public static boolean isLogicOperator(char character) {
 		String string = String.valueOf(character);
 		return string.matches(REGEX_LOGIC_OPERATOR);
+	}
+
+	/**
+	 * Determina se o caractere lido é um operador relacional
+	 * 
+	 * @param character entrada a ser verificada
+	 * @return true, se o caractere for um operador relacional; falso caso não seja.
+	 */
+	public static boolean isRelationalOperator(char character) {
+		String string = String.valueOf(character);
+		return string.matches(REGEX_RELATIONAL_OPERATOR);
 	}
 
 }
