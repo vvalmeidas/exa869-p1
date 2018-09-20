@@ -7,7 +7,7 @@ import model.automaton.FinalState;
 import model.automaton.State;
 
 /**
- * Enumeração com os estados finais possíveis para o autômato.
+ * Enumeração com os estados finais possíveis para o autômato de número.
  * 
  * @author Nadine Cerqueira
  * @author Valmir Vinicius

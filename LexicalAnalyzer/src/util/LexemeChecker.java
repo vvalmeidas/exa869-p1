@@ -86,5 +86,27 @@ public class LexemeChecker {
 		String string = String.valueOf(character);
 		return string.matches(REGEX_UNDERLINE);
 	}
+	
+	/**
+	 * Determina se o caractere lido é um operador artimético.
+	 * 
+	 * @param character entrada a ser verificada
+	 * @return true, se o caractere for um operador arimético; falso, caso contrário
+	 */
+	public static boolean isArithmeticOperator(char character) {
+		String string = String.valueOf(character);
+		return string.matches(REGEX_ARITHMETIC_OPERATOR);
+	}
+	
+	/**
+	 * Determina se o caractere lido é um delimitador.
+	 * 
+	 * @param character entrada a ser verificada
+	 * @return true, se o caractere for um delimitador; falso, caso contrário
+	 */
+	public static boolean isDelimiter(char character) {
+		String string = String.valueOf(character);
+		return string.matches(REGEX_DELIMITER);
+	}
 
 }

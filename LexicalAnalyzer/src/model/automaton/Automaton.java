@@ -26,6 +26,7 @@ public class Automaton {
 	 */
 	public Automaton(State initialState) {
 		currentState = initialState;
+		this.initialState = initialState;
 	}
 	
 	

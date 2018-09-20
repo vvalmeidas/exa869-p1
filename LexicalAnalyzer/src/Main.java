@@ -3,6 +3,8 @@ import java.util.Map;
 
 import controller.FileController;
 import model.automaton.Automaton;
+import model.automaton.arithmetic_operator.ArithmeticOperatorFinalStates;
+import model.automaton.arithmetic_operator.ArithmeticOperatorStates;
 import model.automaton.number.NumberFinalStates;
 import model.automaton.number.NumberStates;
 
@@ -14,7 +16,7 @@ public class Main {
 		FileController.saveFile("arq1.txt", "a" + System.lineSeparator() + "b");
 		
 		char[] chars = s.toCharArray();
-		Automaton a = new Automaton(NumberStates.INITIAL_STATE);
+		Automaton a = new Automaton(NumberStates.NUMBERINITIAL_STATE);
 		LinkedList<Character> list = new LinkedList<Character>();
 
 
@@ -29,7 +31,7 @@ public class Main {
 				}
 				
 				System.out.println(a.getCurrentState() + list.toString());
-				a = new Automaton(NumberStates.INITIAL_STATE);
+				a.reset();
 				list.clear();
 
 			}

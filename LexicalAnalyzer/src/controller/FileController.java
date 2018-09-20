@@ -29,7 +29,9 @@ public class FileController {
 		for(File file : dir.listFiles()) {
 			if(file.getName().endsWith(".txt")) {
 				try {
-					result.put(file.getName(), new String(Files.readAllBytes(Paths.get(file.getPath())), StandardCharsets.ISO_8859_1));
+					String fileString = new String(Files.readAllBytes(Paths.get(file.getPath())), StandardCharsets.ISO_8859_1);
+					fileString = fileString + ' ';
+					result.put(file.getName(), fileString);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
