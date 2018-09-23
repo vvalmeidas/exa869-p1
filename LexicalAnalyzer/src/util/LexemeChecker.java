@@ -21,7 +21,6 @@ public class LexemeChecker {
 	private static String REGEX_DELIMITER = "\\;|\\,|\\(|\\)|\\[|\\]|\\{|\\}|\\.";
 	private static String REGEX_DELIMITERWITHOUTPOINT = "\\;|\\,|\\(|\\)|\\[|\\]|\\{|\\}";
 	
-	
 	/**
 	 * Verifica se a entrada é um dígito válido.
 	 * 
