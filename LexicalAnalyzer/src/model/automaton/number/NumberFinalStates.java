@@ -24,14 +24,6 @@ public enum NumberFinalStates implements FinalState {
 		}
 		
 	},
-	NOTNUMBER_FINALSTATE {
-
-		@Override
-		public State next(char character) {
-			return NOTNUMBER_FINALSTATE;
-		}
-		
-	},
 	BADLYFORMEDNUMBER_FINALSTATE {
 
 		@Override

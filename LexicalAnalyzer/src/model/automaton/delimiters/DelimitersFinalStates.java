@@ -21,14 +21,6 @@ public enum DelimitersFinalStates implements FinalState {
 			return CORRECTDELIMITER_FINALSTATE;
 		}
 		
-	},
-	NOTDELIMITER_FINALSTATE {
-
-		@Override
-		public State next(char character) {
-			return NOTDELIMITER_FINALSTATE;
-		}
-		
 	}
 
 }

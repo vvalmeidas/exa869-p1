@@ -3,14 +3,14 @@ import java.util.Map;
 
 import controller.FileController;
 import model.automaton.Automaton;
-import model.automaton.arithmetic_operator.ArithmeticFinalStates;
-import model.automaton.arithmetic_operator.ArithmeticStates;
 import model.automaton.delimiters.DelimitersFinalStates;
 import model.automaton.delimiters.DelimitersStates;
-import model.automaton.logic_operators.LogicFinalStates;
-import model.automaton.logic_operators.LogicStates;
 import model.automaton.number.NumberFinalStates;
 import model.automaton.number.NumberStates;
+import model.automaton.operator.OperatorFinalStates;
+import model.automaton.operator.OperatorStates;
+import model.automaton.string.StringFinalStates;
+import model.automaton.string.StringStates;
 
 public class Main {
 
@@ -19,25 +19,9 @@ public class Main {
 		String s = r.get("arq1.txt");
 		FileController.saveFile("arq1.txt", "a" + System.lineSeparator() + "b");
 		
-		char[] chars = s.toCharArray();
-		Automaton a = new Automaton(LogicStates.LOGIC_INICIAL_STATE);
-		LinkedList<Character> list = new LinkedList<Character>();
+		Lexer l = new Lexer();
+		l.initialize(s);
 
-
-		for(int i = 0; i < s.length(); i++) {
-			a.next(chars[i]);
-			list.add(chars[i]);
-			
-			if(a.isFinalState()) {
-				if(a.getCurrentState() != LogicFinalStates.NOTLOGIC_FINALSTATE) {
-					list.remove(list.size() - 1);
-					i--;
-				}
-				System.out.println(a.getCurrentState() + list.toString());
-				a = new Automaton(LogicStates.LOGIC_INICIAL_STATE);
-				list.clear();
-			}
-		}
 
 	}
 

@@ -25,14 +25,6 @@ public enum IdentifierFinalStates implements FinalState{
 		}
 		
 	},
-	NOTIDENTIFIER_FINALSTATE {
-
-		@Override
-		public State next(char character) {
-			return NOTIDENTIFIER_FINALSTATE;
-		}
-		
-	},
 	BADLYFORMEDIDENTIFIER_FINALSTATE {
 
 		@Override

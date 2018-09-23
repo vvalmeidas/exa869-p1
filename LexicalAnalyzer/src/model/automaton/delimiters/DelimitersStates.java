@@ -24,7 +24,7 @@ public enum DelimitersStates implements State {
 				return CORRECTDELIMITER_STATE;
 			}
 			
-			return DelimitersFinalStates.NOTDELIMITER_FINALSTATE;
+			return DelimiterDeadState.NOTDELIMITER_FINALSTATE;
 			
 		}
 		

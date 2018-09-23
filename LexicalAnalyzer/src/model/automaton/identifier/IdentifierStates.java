@@ -22,15 +22,14 @@ public enum IdentifierStates implements State{
 		public State next(char character) {
 			if(LexemeChecker.isLetter(character)) {
 				return LETTER_STATE;
-			} else if(LexemeChecker.isIdentifierDelimiter(character)){
-				return IdentifierFinalStates.CORRECTIDENTIFIER_FINALSTATE;
-			}
+			} //else if(LexemeChecker.isIdentifierDelimiter(character)){
+				//return IdentifierFinalStates.CORRECTIDENTIFIER_FINALSTATE;
+			//}
 			
-			return IdentifierFinalStates.NOTIDENTIFIER_FINALSTATE;
+			return IdentifierDeadState.NOTIDENTIFIER_FINALSTATE;
 		}
 		
 	},
-	
 	LETTER_STATE {
 
 		@Override

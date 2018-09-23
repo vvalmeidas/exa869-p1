@@ -26,7 +26,7 @@ public enum NumberStates implements State {
 				return NEGATIVESPACES_STATE;
 			}
 			
-			return NumberFinalStates.NOTNUMBER_FINALSTATE;
+			return NumberDeadState.NOTNUMBER_FINALSTATE;
 		}
 		
 	},
@@ -57,7 +57,7 @@ public enum NumberStates implements State {
 				return DIGIT_STATE;
 			}
 			
-			return NumberFinalStates.NOTNUMBER_FINALSTATE;
+			return NumberDeadState.NOTNUMBER_FINALSTATE;
 		}
 		
 	},

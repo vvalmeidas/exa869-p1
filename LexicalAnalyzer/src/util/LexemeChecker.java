@@ -51,7 +51,7 @@ public class LexemeChecker {
 	 */
 	public static boolean isNumberDelimiter(char character) {
 		String string = String.valueOf(character);
-		return character == '\r' || character == ' ' || string.matches(REGEX_DELIMITERWITHOUTPOINT) || string.matches(REGEX_ARITHMETIC_OPERATOR) || string.matches(REGEX_RELATIONAL_OPERATOR) || string.matches(REGEX_LOGIC_OPERATOR);
+		return character == '\n' || character == '\r' || character == ' ' || string.matches(REGEX_DELIMITERWITHOUTPOINT) || string.matches(REGEX_ARITHMETIC_OPERATOR) || string.matches(REGEX_RELATIONAL_OPERATOR) || string.matches(REGEX_LOGIC_OPERATOR);
 	}
 
 	/**
@@ -129,6 +129,16 @@ public class LexemeChecker {
 	public static boolean isRelationalOperator(char character) {
 		String string = String.valueOf(character);
 		return string.matches(REGEX_RELATIONAL_OPERATOR);
+	}
+	
+	/**
+	 * Determina se o caractere lido é um símbolo válido.
+	 * 
+	 * @param character entrada a ser verificada
+	 * @return true, se o caractere for um símbolo válido; falso caso não seja.
+	 */
+	public static boolean isValidSymbol(char character) {
+		return (character >= 32 && character <= 126) && (character != 34);
 	}
 
 }
