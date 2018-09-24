@@ -23,7 +23,7 @@ public enum CommentDelimiterStates implements State{
 			if(character == '/') {
 				return ASTERISC_COMMENT_DELIMITER_STATE;
 			}
-			return CommentDelimiterFinalStates.NOT_COMMENT_DELIMITER_FINALSTATE;
+			return CommentDelimiterDeadState.NOT_COMMENT_DELIMITER_FINALSTATE;
 			
 		}
 		
@@ -37,7 +37,7 @@ public enum CommentDelimiterStates implements State{
 				return CORRECT_COMMENT_DELIMITER_STATE;
 			}
 				
-			return CommentDelimiterFinalStates.NOT_COMMENT_DELIMITER_FINALSTATE;
+			return CommentDelimiterDeadState.NOT_COMMENT_DELIMITER_FINALSTATE;
 		}
 		
 	},

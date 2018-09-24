@@ -25,6 +25,15 @@ public enum IdentifierFinalStates implements FinalState{
 		}
 		
 	},
+	CORRECTIDENTIFIER_KEYWORD_FINALSTATE {
+
+		@Override
+		public State next(char character) {
+			
+			return CORRECTIDENTIFIER_KEYWORD_FINALSTATE;
+		}
+		
+	},
 	BADLYFORMEDIDENTIFIER_FINALSTATE {
 
 		@Override

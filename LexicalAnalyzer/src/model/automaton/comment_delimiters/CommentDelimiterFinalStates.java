@@ -23,14 +23,6 @@ public enum CommentDelimiterFinalStates implements FinalState{
 		}
 		
 	},
-	NOT_COMMENT_DELIMITER_FINALSTATE {
-
-		@Override
-		public State next(char character) {
-			return NOT_COMMENT_DELIMITER_FINALSTATE;
-		}
-		
-	},
 	BADLYFORMEDCOMMENT_DELIMITER_FINALSTATE {
 
 		@Override

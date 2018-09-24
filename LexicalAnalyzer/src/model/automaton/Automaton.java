@@ -65,6 +65,15 @@ public class Automaton {
 	}
 	
 	/**
+	 * Configura o estado atual do autômato.
+	 * 
+	 * @param state novo estado atual
+	 */
+	public void setCurrentState(State state) {
+		this.currentState = state;
+	}
+	
+	/**
 	 * Configura o próximo estado do autômato de acordo com o caractere.
 	 * @param character próximo caractere
 	 */

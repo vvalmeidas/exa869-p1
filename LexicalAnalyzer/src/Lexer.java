@@ -3,8 +3,10 @@ import java.util.LinkedList;
 import model.automaton.Automaton;
 import model.automaton.AutomatonConfiguration;
 import model.automaton.State;
+import model.automaton.identifier.IdentifierFinalStates;
 import model.automaton.string.StringFinalStates;
 import model.automaton.string.StringStates;
+import util.LexemeChecker;
 
 /**
  * 
@@ -65,19 +67,24 @@ public class Lexer {
 			}
 			
 			if(theresAnyFinalState()) {
-				
 				if(lexeme.deleteCharAt(lexeme.length() - 1).toString() == "\n") {
 					row--;
 				}
 				
 				i--;
-				System.out.println(getTheFinalState() + "  LINHA" + String.valueOf(row) + " " + lexeme.toString());
+				
+				if(identifier.isFinalState() && LexemeChecker.isKeyWord(lexeme.toString())) {
+					identifier.setCurrentState(IdentifierFinalStates.CORRECTIDENTIFIER_KEYWORD_FINALSTATE);
+				}
+				
+				System.out.println(getTheFinalState() + "  LINHA" + String.valueOf(row) + lexeme.toString());
 				startAutomatons();
 				lexeme = new StringBuilder();
 			} else if(isEveryAutomatonDead()) {
-				System.out.println("todos mortos");
 				startAutomatons();
+
 				lexeme = new StringBuilder();
+			
 			}
 			
 		}

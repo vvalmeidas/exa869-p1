@@ -21,6 +21,9 @@ public class Main {
 		
 		Lexer l = new Lexer();
 		l.initialize(s);
+		
+		char teste = 34;
+		System.out.println(teste);
 
 
 	}

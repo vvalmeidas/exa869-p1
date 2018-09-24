@@ -3,6 +3,8 @@ package util;
  * 
  */
 
+import java.util.ArrayList;
+
 /**
  * Classe responsável por implementar métodos que realizam a checagem de um lexema.
  *
@@ -20,6 +22,28 @@ public class LexemeChecker {
 	private static String REGEX_RELATIONAL_OPERATOR = "!=|==|<|<=|>|>=|=";
 	private static String REGEX_DELIMITER = "\\;|\\,|\\(|\\)|\\[|\\]|\\{|\\}|\\.";
 	private static String REGEX_DELIMITERWITHOUTPOINT = "\\;|\\,|\\(|\\)|\\[|\\]|\\{|\\}";
+	private static ArrayList<String> KEYWORDS = new ArrayList<String>() {{
+	    add("class");
+	    add("const");
+	    add("variables");
+	    add("method");
+	    add("return");
+	    add("main");
+	    add("if");
+	    add("then");
+	    add("else");
+	    add("while");
+	    add("read");
+	    add("write");
+	    add("void");
+	    add("int");
+	    add("float");
+	    add("bool");
+	    add("string");
+	    add("true");
+	    add("false");
+	    add("extends");
+	}};
 	
 	/**
 	 * Verifica se a entrada é um dígito válido.
@@ -72,7 +96,7 @@ public class LexemeChecker {
 	 */
 	public static boolean isIdentifierDelimiter(char character) {
 		String string = String.valueOf(character);
-		return string.matches(REGEX_DELIMITER);
+		return character == '\n' || character == '\r' || character == ' ' || string.matches(REGEX_DELIMITERWITHOUTPOINT) || string.matches(REGEX_ARITHMETIC_OPERATOR) || string.matches(REGEX_RELATIONAL_OPERATOR) || string.matches(REGEX_LOGIC_OPERATOR);
 	}
 	
 	/**
@@ -138,6 +162,26 @@ public class LexemeChecker {
 	 */
 	public static boolean isValidSymbol(char character) {
 		return (character >= 32 && character <= 126) && (character != 34);
+	}
+	
+	/**
+	 * Verifica se o caractere é válido para ser registrado como um token.
+	 * 
+	 * @param character entrada a ser verificada
+	 * @return true, se o caractere for válido para token; falso, caso contrário
+	 */
+	public static boolean isValidForToken(char character) {
+		return !(character == ' ' || character == '\r' || character == '\n');
+	}
+	
+	/**
+	 * Verifica se o lexema é uma palavra reservada.
+	 * 
+	 * @param string lexema a ser analisado
+	 * @return true, se o lexema for uma palavra reservada; false, caso contrário
+	 */
+	public static boolean isKeyWord(String string) {
+		return KEYWORDS.contains(string);
 	}
 
 }
