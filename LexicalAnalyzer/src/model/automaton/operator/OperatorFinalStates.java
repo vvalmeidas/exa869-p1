@@ -50,6 +50,7 @@ public enum OperatorFinalStates implements FinalState {
 	CORRECT_BLOCK_COMMENT_DELIMITER_STATE {
 		@Override
 		public State next(char character) {
+			System.out.println("Entrou " + character);
 			return CORRECT_BLOCK_COMMENT_DELIMITER_STATE;
 		}
 	}

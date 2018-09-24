@@ -89,7 +89,7 @@ public enum OperatorStates implements State {
 		@Override
 		public State next(char character) {
 			// se chegou ao fim da linha
-			if(character == '/') {
+			if(character == '\\') {
 				return OPERATOR_COMMENT_LINEEND_STATE;
 			}
 			return OPERATOR_COMMENT_LOOP_STATE;
@@ -120,17 +120,48 @@ public enum OperatorStates implements State {
 		
 		@Override
 		public State next(char character) {
+			
 			if(character == '/') {
-				return OperatorFinalStates.CORRECT_BLOCK_COMMENT_DELIMITER_STATE;
+				return CORRECT_BLOCK_COMMENT_DELIMITER_STATE;
 			}
 			
 			//se chegou ao fim do arquivo
-			//if(character ) {	
-			//	return OperatorFinalStates.BADLY_FORMED_OPERATOR_BLOCK_COMMENT_END_STATE;
-			//}
+			if(character == 'e' || character == 'E') {	
+				return END_OF_FILE_N_STATE;
+			}
 			return OPERATOR_BLOCK_COMMENT_END_STATE;
 		}
 		
+	},
+	END_OF_FILE_N_STATE {
+		
+		@Override
+		public State next(char character) {
+			if(character == 'n' || character == 'N') {
+				return END_OF_FILE_D_STATE;
+			}
+			return END_OF_FILE_LOOP;
+		}
+	},
+	END_OF_FILE_D_STATE {
+		
+		@Override
+		public State next(char character) {
+			if(character == 'd' || character == 'D') {
+				return CORRECT_BLOCK_COMMENT_DELIMITER_STATE;
+			}
+			return END_OF_FILE_LOOP;
+		}
+	},
+	END_OF_FILE_LOOP {
+		
+		@Override
+		public State next(char character) {
+			if(character == 'e' || character == 'E') {
+				return END_OF_FILE_N_STATE;
+			}
+			return END_OF_FILE_LOOP;
+		}
 	},
 	OPERATOR_EXCLAMATION_SYMBOL_STATE {
 
@@ -225,5 +256,12 @@ public enum OperatorStates implements State {
 			return OperatorFinalStates.CORRECT_OPERATOR_RELATIONAL_FINALSTATE;
 		}
 		
+	},
+	CORRECT_BLOCK_COMMENT_DELIMITER_STATE {
+		
+		@Override
+		public State next(char character) {
+			return OperatorFinalStates.CORRECT_BLOCK_COMMENT_DELIMITER_STATE;
+		}
 	}
 }
