@@ -4,6 +4,7 @@
 package model.automaton.operator;
 
 import model.automaton.State;
+import model.automaton.comment_delimiters.CommentDelimiterFinalStates;
 import util.LexemeChecker;
 
 /**
@@ -24,7 +25,9 @@ public enum OperatorStates implements State {
 					return OPERATOR_ARITHMETIC_2PLUS_STATE;
 				} else if(character == '-') {
 					return OPERATOR_ARITHMETIC_2MINUS_STATE;
-				}
+				} else if(character == '/') {
+					return OPERATOR_COMMENT_INIT_STATE;
+				} 
 				
 				return CORRECT_OPERATOR_ARITHMETIC_STATE;
 			} else if(character == '!') {
@@ -66,6 +69,66 @@ public enum OperatorStates implements State {
 			}
 			
 			return OperatorFinalStates.CORRECT_OPERATOR_ARITHMETIC_FINALSTATE;
+		}
+		
+	},
+	OPERATOR_COMMENT_INIT_STATE {
+		
+		@Override
+		public State next(char character) {
+			if(character == '*') {
+				return OPERATOR_BLOCK_COMMENT_LOOP_STATE;
+			} else if(character == '/') {
+				return OPERATOR_COMMENT_LOOP_STATE;
+			}
+			return OperatorFinalStates.CORRECT_OPERATOR_ARITHMETIC_FINALSTATE;
+		}
+	},
+	OPERATOR_COMMENT_LOOP_STATE {
+		
+		@Override
+		public State next(char character) {
+			// se chegou ao fim da linha
+			if(character == '/') {
+				return OPERATOR_COMMENT_LINEEND_STATE;
+			}
+			return OPERATOR_COMMENT_LOOP_STATE;
+		}
+	},
+	OPERATOR_COMMENT_LINEEND_STATE{
+		
+		@Override
+		public State next(char character) {
+			//se chegou ao fim da linha
+			if(character == 'n') {
+				return OperatorFinalStates.CORRECT_COMMENT_DELIMITER_STATE;
+			}
+			return OPERATOR_COMMENT_LOOP_STATE;
+		}
+	},
+	OPERATOR_BLOCK_COMMENT_LOOP_STATE {
+		
+		@Override
+		public State next(char character) {
+			if(character == '*') {
+				return OPERATOR_BLOCK_COMMENT_END_STATE;
+			}
+			return OPERATOR_BLOCK_COMMENT_LOOP_STATE;
+		}
+	},
+	OPERATOR_BLOCK_COMMENT_END_STATE {
+		
+		@Override
+		public State next(char character) {
+			if(character == '/') {
+				return OperatorFinalStates.CORRECT_BLOCK_COMMENT_DELIMITER_STATE;
+			}
+			
+			//se chegou ao fim do arquivo
+			//if(character ) {	
+			//	return OperatorFinalStates.BADLY_FORMED_OPERATOR_BLOCK_COMMENT_END_STATE;
+			//}
+			return OPERATOR_BLOCK_COMMENT_END_STATE;
 		}
 		
 	},

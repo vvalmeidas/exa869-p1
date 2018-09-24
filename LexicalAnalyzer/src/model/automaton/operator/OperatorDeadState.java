@@ -21,5 +21,12 @@ public enum OperatorDeadState implements DeadState {
 			return NOT_OPERATOR_FINALSTATE;
 		}
 		
+	},
+	BADLY_FORMED_OPERATOR_BLOCK_COMMENT_END_STATE {
+		
+		@Override 
+		public State next(char character) {
+			return BADLY_FORMED_OPERATOR_BLOCK_COMMENT_END_STATE;
+		}
 	}
 }

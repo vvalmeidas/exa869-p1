@@ -38,8 +38,21 @@ public enum OperatorFinalStates implements FinalState {
 			return CORRECT_OPERATOR_RELATIONAL_FINALSTATE;
 		}
 		
-	}
+	},
+	CORRECT_COMMENT_DELIMITER_STATE {
+		
+		@Override
+		public State next(char character) {
+			return CORRECT_COMMENT_DELIMITER_STATE;
+		}
+	},
 	
+	CORRECT_BLOCK_COMMENT_DELIMITER_STATE {
+		@Override
+		public State next(char character) {
+			return CORRECT_BLOCK_COMMENT_DELIMITER_STATE;
+		}
+	}
 	
 
 }
