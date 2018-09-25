@@ -21,50 +21,18 @@ public class Token {
 	/** Linha em que encontra-se o token */
 	private int row;
 	
-	/** Coluna na qual encontra-se o token */
-	private int column;
-	
 	/**
 	 * Obtém uma instância do token
 	 * 
 	 * @param name nome do token
 	 * @param value valor (lexema) do token
 	 * @param row linha em que encontra-se o token
-	 * @param column coluna em que encontra-se o token
 	 */
-	public Token(String name, String value, int row, int column) {
+	public Token(String name, String value, int row) {
 		this.name = name;
 		this.value = value;
 		this.row = row;
-		this.column = column;
 	}
 	
 	
-	/**
-	 * @return nome do token
-	 */
-	public String getName() {
-		return name;
-	}
-	
-	/**
-	 * @return valor do token
-	 */
-	public String getValue() {
-		return value;
-	}
-
-	/**
-	 * @return linha em que encontra-se o token
-	 */
-	public int getRow() {
-		return row;
-	}
-
-	/**
-	 * @return coluna em que encontra-se o token
-	 */
-	public int getColumn() {
-		return column;
-	}
 }

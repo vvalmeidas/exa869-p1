@@ -2,15 +2,6 @@ import java.util.LinkedList;
 import java.util.Map;
 
 import controller.FileController;
-import model.automaton.Automaton;
-import model.automaton.delimiters.DelimitersFinalStates;
-import model.automaton.delimiters.DelimitersStates;
-import model.automaton.number.NumberFinalStates;
-import model.automaton.number.NumberStates;
-import model.automaton.operator.OperatorFinalStates;
-import model.automaton.operator.OperatorStates;
-import model.automaton.string.StringFinalStates;
-import model.automaton.string.StringStates;
 
 public class Main {
 
@@ -21,11 +12,6 @@ public class Main {
 		
 		Lexer l = new Lexer();
 		l.initialize(s);
-		
-		char teste = 34;
-		System.out.println(teste);
-
-
 	}
 
 }

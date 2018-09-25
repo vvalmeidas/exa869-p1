@@ -28,7 +28,7 @@ public class Automaton {
 	/**
 	 * Metódo privado para obter uma instância de autômato.
 	 */
-	private Automaton(State initialState) {
+	public Automaton(State initialState) {
 		currentState = initialState;
 		this.initialState = initialState;
 	}

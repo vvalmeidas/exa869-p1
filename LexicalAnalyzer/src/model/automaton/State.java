@@ -20,5 +20,5 @@ public interface State {
 	 * @return próximo estado do autômato
 	 */
 	public State next(char character);
-
+	
 }
