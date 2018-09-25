@@ -89,19 +89,8 @@ public enum OperatorStates implements State {
 		@Override
 		public State next(char character) {
 			// se chegou ao fim da linha
-			if(character == '\\') {
-				return OPERATOR_COMMENT_LINEEND_STATE;
-			}
-			return OPERATOR_COMMENT_LOOP_STATE;
-		}
-	},
-	OPERATOR_COMMENT_LINEEND_STATE{
-		
-		@Override
-		public State next(char character) {
-			//se chegou ao fim da linha
-			if(character == 'n') {
-				return OperatorFinalStates.CORRECT_COMMENT_DELIMITER_STATE;
+			if(character == '\n') {
+				return OperatorFinalStates.CORRECT_COMMENT_DELIMITER_FINALSTATE;
 			}
 			return OPERATOR_COMMENT_LOOP_STATE;
 		}
@@ -124,44 +113,9 @@ public enum OperatorStates implements State {
 			if(character == '/') {
 				return CORRECT_BLOCK_COMMENT_DELIMITER_STATE;
 			}
-			
-			//se chegou ao fim do arquivo
-			if(character == 'e' || character == 'E') {	
-				return END_OF_FILE_N_STATE;
-			}
-			return OPERATOR_BLOCK_COMMENT_END_STATE;
+			return OPERATOR_BLOCK_COMMENT_LOOP_STATE;
 		}
 		
-	},
-	END_OF_FILE_N_STATE {
-		
-		@Override
-		public State next(char character) {
-			if(character == 'n' || character == 'N') {
-				return END_OF_FILE_D_STATE;
-			}
-			return END_OF_FILE_LOOP;
-		}
-	},
-	END_OF_FILE_D_STATE {
-		
-		@Override
-		public State next(char character) {
-			if(character == 'd' || character == 'D') {
-				return CORRECT_BLOCK_COMMENT_DELIMITER_STATE;
-			}
-			return END_OF_FILE_LOOP;
-		}
-	},
-	END_OF_FILE_LOOP {
-		
-		@Override
-		public State next(char character) {
-			if(character == 'e' || character == 'E') {
-				return END_OF_FILE_N_STATE;
-			}
-			return END_OF_FILE_LOOP;
-		}
 	},
 	OPERATOR_EXCLAMATION_SYMBOL_STATE {
 
@@ -261,7 +215,7 @@ public enum OperatorStates implements State {
 		
 		@Override
 		public State next(char character) {
-			return OperatorFinalStates.CORRECT_BLOCK_COMMENT_DELIMITER_STATE;
+			return OperatorFinalStates.CORRECT_BLOCK_COMMENT_DELIMITER_FINALSTATE;
 		}
 	}
 }

@@ -1,6 +1,18 @@
 const [a, 5, 3+3,
 2 != , || = ==;
+<<<<<<< HEAD
 3 >= ||
 #@
+=======
+3 >= || 
+// aaa
+>>>>>>> branch 'master' of https://github.com/vvalmeidas/exa869-p1.git
 /* oi 
+<<<<<<< HEAD
 mundo */
+=======
+mundo *
+a
+b
+c
+>>>>>>> branch 'master' of https://github.com/vvalmeidas/exa869-p1.git

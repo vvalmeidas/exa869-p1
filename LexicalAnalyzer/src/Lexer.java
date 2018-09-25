@@ -13,6 +13,7 @@ import model.automaton.delimiters.DelimitersStates;
 import model.automaton.identifier.IdentifierFinalStates;
 import model.automaton.number.NumberFinalStates;
 import model.automaton.operator.OperatorFinalStates;
+import model.automaton.operator.OperatorDeadState;
 import model.automaton.string.StringFinalStates;
 import model.automaton.string.StringStates;
 import util.LexemeChecker;
@@ -77,6 +78,15 @@ public class Lexer {
 				operator.next(sourceChar[i]);
 			}
 			
+			if(i == 61) {
+				System.out.println(operator.getCurrentState().toString());
+				if(operator.getCurrentState().toString().equals("OPERATOR_BLOCK_COMMENT_LOOP_STATE")) {
+					//comentário de bloco mal formado
+					System.out.println("Comentário de Bloco Mal Formado");
+					operator.setCurrentState(OperatorDeadState.BADLY_FORMED_OPERATOR_BLOCK_COMMENT_END_STATE);
+				}
+			}
+			
 			if(theresAnyFinalState()) {
 				if(lexeme.deleteCharAt(lexeme.length() - 1).toString() == "\n") {
 					row--;
@@ -114,7 +124,8 @@ public class Lexer {
 			}
 			
 		}
-		
+		System.out.println("Arquivo terminou");
+	
 	}
 	
 	/**
