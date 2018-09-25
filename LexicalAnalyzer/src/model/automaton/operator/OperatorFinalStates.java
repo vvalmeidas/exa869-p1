@@ -39,19 +39,18 @@ public enum OperatorFinalStates implements FinalState {
 		}
 		
 	},
-	CORRECT_COMMENT_DELIMITER_STATE {
+	CORRECT_COMMENT_DELIMITER_FINALSTATE {
 		
 		@Override
 		public State next(char character) {
-			return CORRECT_COMMENT_DELIMITER_STATE;
+			return CORRECT_COMMENT_DELIMITER_FINALSTATE;
 		}
 	},
 	
-	CORRECT_BLOCK_COMMENT_DELIMITER_STATE {
+	CORRECT_BLOCK_COMMENT_DELIMITER_FINALSTATE {
 		@Override
 		public State next(char character) {
-			System.out.println("Entrou " + character);
-			return CORRECT_BLOCK_COMMENT_DELIMITER_STATE;
+			return CORRECT_BLOCK_COMMENT_DELIMITER_FINALSTATE;
 		}
 	}
 	
