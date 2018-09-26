@@ -40,9 +40,21 @@ public enum IdentifierStates implements State{
 				return IdentifierFinalStates.CORRECTIDENTIFIER_FINALSTATE;
 			}
 			
-			return IdentifierFinalStates.BADLYFORMEDIDENTIFIER_FINALSTATE;
+			return BADLYFORMEDIDENTIFIER_STATE;
 		}
 		
 	},
+	BADLYFORMEDIDENTIFIER_STATE {
+
+		@Override
+		public State next(char character) {
+			if(LexemeChecker.isIdentifierDelimiter(character)) {
+				return IdentifierFinalStates.BADLYFORMEDIDENTIFIER_FINALSTATE;
+			}
+			
+			return BADLYFORMEDIDENTIFIER_STATE;
+		}
+		
+	}
 
 }

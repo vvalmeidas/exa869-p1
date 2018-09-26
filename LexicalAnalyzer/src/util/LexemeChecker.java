@@ -74,7 +74,7 @@ public class LexemeChecker {
 	 */
 	public static boolean isNumberDelimiter(char character) {
 		String string = String.valueOf(character);
-		return character == '\n' || character == '\r' || character == ' ' || string.matches(REGEX_DELIMITERWITHOUTPOINT) || string.matches(REGEX_ARITHMETIC_OPERATOR) || string.matches(REGEX_RELATIONAL_OPERATOR) || string.matches(REGEX_LOGIC_OPERATOR);
+		return character == '\n' || character == '\r' || character == ' ' || string.matches(REGEX_DELIMITER) || string.matches(REGEX_ARITHMETIC_OPERATOR) || string.matches(REGEX_RELATIONAL_OPERATOR) || string.matches(REGEX_LOGIC_OPERATOR);
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class LexemeChecker {
 	 */
 	public static boolean isIdentifierDelimiter(char character) {
 		String string = String.valueOf(character);
-		return character == '\n' || character == '\r' || character == ' ' || string.matches(REGEX_DELIMITERWITHOUTPOINT) || string.matches(REGEX_ARITHMETIC_OPERATOR) || string.matches(REGEX_RELATIONAL_OPERATOR) || string.matches(REGEX_LOGIC_OPERATOR);
+		return character == '\n' || character == '\r' || character == ' ' || string.matches(REGEX_DELIMITER) || string.matches(REGEX_ARITHMETIC_OPERATOR) || string.matches(REGEX_RELATIONAL_OPERATOR) || string.matches(REGEX_LOGIC_OPERATOR);
 	}
 	
 	/**

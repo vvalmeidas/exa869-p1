@@ -34,5 +34,13 @@ public class Token {
 		this.row = row;
 	}
 	
+	/**
+	 * Obtém uma string com os atributos da classe.
+	 */
+	public String toString() {
+		return row + "  " + name + "	" + value + System.lineSeparator();
+		
+	}
+	
 	
 }

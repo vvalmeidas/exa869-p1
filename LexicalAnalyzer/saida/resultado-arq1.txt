@@ -1,2 +1,10 @@
-a
-b
+TOKENS:
+Linha / Nome do Token / Valor
+
+1  DELIMITADOR	;
+
+
+
+ERROS:
+
+Identificador mal formado: 'cont@dor' em linha 1

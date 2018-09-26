@@ -1,3 +1,4 @@
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -47,12 +48,14 @@ public class Lexer {
 	public void initialize(String source) {
 		char[] sourceChar = source.toCharArray();
 		int row = 1;
+		int blockComment = 1;
+		boolean isBlockComment = false;
 		StringBuilder lexeme = new StringBuilder();
 		System.out.println(sourceChar.length);
 
 		for(int i = 0; i < sourceChar.length; i++) {
 			
-			if(sourceChar[i] == '\n') {
+			if(sourceChar[i] == 10) {
 				row++;
 			}
 			
@@ -78,19 +81,19 @@ public class Lexer {
 				operator.next(sourceChar[i]);
 			}
 			
-			if(i == 61) {
-				System.out.println(operator.getCurrentState().toString());
-				if(operator.getCurrentState().toString().equals("OPERATOR_BLOCK_COMMENT_LOOP_STATE")) {
-					//comentário de bloco mal formado
-					System.out.println("Comentário de Bloco Mal Formado");
-					operator.setCurrentState(OperatorDeadState.BADLY_FORMED_OPERATOR_BLOCK_COMMENT_END_STATE);
-				}
+			if(!isBlockComment && operator.getCurrentState().toString().equals("OPERATOR_BLOCK_COMMENT_LOOP_STATE")) {
+				blockComment = row;
+				isBlockComment = true;
 			}
 			
 			if(theresAnyFinalState()) {
-				if(lexeme.deleteCharAt(lexeme.length() - 1).toString() == "\n") {
+				char lastChar = lexeme.toString().charAt(lexeme.length() - 1);
+				
+				if(lastChar == '\n') {
 					row--;
-				}
+				} 
+				
+				lexeme.deleteCharAt(lexeme.length() - 1);
 				
 				i--;
 				
@@ -103,27 +106,44 @@ public class Lexer {
 				if(isErrorState(finalState)) {
 					errors.add(new Error(getErrorDescription(finalState), lexeme.toString(), row));
 				} else {
-					tokens.add(new Token(getTokenType(finalState), lexeme.toString(), row));
+					if(isBlockComment) {
+						tokens.add(new Token(getTokenType(finalState), lexeme.toString(), blockComment));
+						isBlockComment = false;
+					} else {
+						tokens.add(new Token(getTokenType(finalState), lexeme.toString(), row));
+					}
 				}
 
 				
-				System.out.println(getTheFinalState() + "  LINHA" + String.valueOf(row) + lexeme.toString());
+				//System.out.println(getTheFinalState() + " L" + String.valueOf(row) + "   " +  lexeme.toString());
 				startAutomatons();
-				
 				lexeme = new StringBuilder();
 			} else if(isEveryAutomatonDead()) {
 				int unknownChar = (int) lexeme.toString().charAt(0);
+			
 				
-				if(unknownChar != 32 && unknownChar != 10 && unknownChar != 13 && unknownChar != System.lineSeparator().charAt(0)) {
-					System.out.println("Caractere desconhecido".concat(lexeme.toString()));
+				if(unknownChar != 9 && unknownChar != 32 && unknownChar != 10 && unknownChar != 13 && unknownChar != System.lineSeparator().charAt(0)) {
+					errors.add(new Error("Caractere desconhecido", lexeme.toString(), row));
 				}
 				
-				errors.add(new Error("Caractere desconhecido", lexeme.toString(), row));
 				lexeme = new StringBuilder();
 				startAutomatons();
 			}
 			
+			if(i == sourceChar.length-1) {
+				System.out.println(operator.getCurrentState().toString());
+				if(operator.getCurrentState().toString().equals("OPERATOR_BLOCK_COMMENT_LOOP_STATE")) {
+					//comentário de bloco mal formado
+					errors.add(new Error("Comentário de bloco mal formado", lexeme.toString(), blockComment));
+					operator.setCurrentState(OperatorDeadState.BADLY_FORMED_OPERATOR_BLOCK_COMMENT_END_STATE);
+				}
+			}
+			
 		}
+		
+		System.out.println(tokens.toString());
+		System.out.println(errors.toString());
+
 		System.out.println("Arquivo terminou");
 	
 	}
@@ -186,7 +206,7 @@ public class Lexer {
 	 */
 	private boolean isErrorState(State state) {		
 		if(string.isFinalState()) {
-			return state == IdentifierFinalStates.BADLYFORMEDIDENTIFIER_FINALSTATE;
+			return state == StringFinalStates.BADLYFORMED_STRING_FINALSTATE;
 		} else if(number.isFinalState()) {
 			return state == NumberFinalStates.BADLYFORMEDNUMBER_FINALSTATE;
 		} else if(identifier.isFinalState()) {
@@ -206,10 +226,10 @@ public class Lexer {
 		if(string.isFinalState()) {
 			return "Identificador mal formado";
 		} else if(number.isFinalState()) {
-			return "Número mal formado";
+			return "Numero mal formado";
 		} else if(identifier.isFinalState()) {
 			return "Identificador mal formado";
-		} 
+		}
 		
 		return null;
 	}
@@ -224,7 +244,7 @@ public class Lexer {
 		if(string.isFinalState()) {
 			return "CADEIA_DE_CARACTERES";
 		} else if(number.isFinalState()) {
-			return "NÚMERO";
+			return "NUMERO";
 		} else if(delimiter.isFinalState()) {
 			return "DELIMITADOR";
 		} else if(identifier.isFinalState()) {
@@ -235,13 +255,48 @@ public class Lexer {
 			}
 		} else {
 			if(state == OperatorFinalStates.CORRECT_OPERATOR_ARITHMETIC_FINALSTATE) {
-				return "OPERADOR_ARITMÉTICO";
+				return "OPERADOR_ARITMETICO";
 			} else if(state == OperatorFinalStates.CORRECT_OPERATOR_LOGIC_FINALSTATE) {
-				return "OPERADOR_LÓGICO";
-			} else {
+				return "OPERADOR_LOGICO";
+			} else  if (state == OperatorFinalStates.CORRECT_OPERATOR_RELATIONAL_FINALSTATE){
 				return "OPERADOR_RELACIONAL";
+			} else if(state == OperatorFinalStates.CORRECT_BLOCK_COMMENT_DELIMITER_FINALSTATE){
+				return "COMENTÁRIO DE BLOCO";
+			} else {
+				return "COMENTÁRIO DE LINHA";
 			}
 		}
+	}
+	
+	/**
+	 * Obtém uma String contendo os resultados da análise léxica
+	 * 
+	 * @return string com os resultados da análise léxica
+	 */
+	public String getResults() {
+		String result = "TOKENS:" + System.lineSeparator() + "Linha / Nome do Token / Valor" + System.lineSeparator() + System.lineSeparator();
+		
+		Iterator<Token> it = tokens.iterator();
+		
+		while(it.hasNext()) {
+			Token token = it.next();
+			result = result + token.toString();
+		}
+		
+		if(errors.size() == 0) {
+			result = result + System.lineSeparator() + System.lineSeparator() + System.lineSeparator() + "SUCESSO!";
+		} else {
+			result = result + System.lineSeparator() + System.lineSeparator() + System.lineSeparator() + "ERROS:" + System.lineSeparator() + System.lineSeparator();
+			Iterator<Error> ie = errors.iterator();
+			
+			while(ie.hasNext()) {
+				System.lineSeparator();
+				Error error = ie.next();
+				result = result + error.toString();
+			}
+		}
+		
+		return result;
 	}
 	
 	

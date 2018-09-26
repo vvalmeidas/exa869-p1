@@ -33,5 +33,12 @@ public class Error {
 		this.value = value;
 		this.row = row;
 	}
+	
+	/**
+	 * Obtém uma string com os atributos da classe.
+	 */
+	public String toString() {
+		return description + ": '" + value + "' em linha " + row + System.lineSeparator();
+	}
 
 }
