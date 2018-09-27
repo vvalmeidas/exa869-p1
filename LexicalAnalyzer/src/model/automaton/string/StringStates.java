@@ -37,10 +37,8 @@ public enum StringStates implements State {
 			if(character == 92) { //se o caractere for \
 				return STRING_SPECIAL_SYMBOL_STATE;
 			} else if(LexemeChecker.isValidSymbol(character)) {
-				//System.out.println("Válido");
 				return STRING_READING_STATE;
 			} else if(character == '"') {
-				//System.out.println("Fechou");
 				return STRING_CLOSE_STATE;
 			}
 			

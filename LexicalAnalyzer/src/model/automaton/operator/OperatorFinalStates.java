@@ -46,12 +46,19 @@ public enum OperatorFinalStates implements FinalState {
 			return CORRECT_COMMENT_DELIMITER_FINALSTATE;
 		}
 	},
-	
 	CORRECT_BLOCK_COMMENT_DELIMITER_FINALSTATE {
 		@Override
 		public State next(char character) {
 			return CORRECT_BLOCK_COMMENT_DELIMITER_FINALSTATE;
 		}
+	}, 
+	BADLYFORMED_OPERATOR_LOGIC_FINALSTATE {
+
+		@Override
+		public State next(char character) {
+			return BADLYFORMED_OPERATOR_LOGIC_FINALSTATE;
+		}
+		
 	}
 	
 

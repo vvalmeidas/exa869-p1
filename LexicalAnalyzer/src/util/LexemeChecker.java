@@ -15,11 +15,11 @@ import java.util.ArrayList;
 public class LexemeChecker {
 	
 	private static String REGEX_DIGIT = "[\\d]";
-	private static String REGEX_LETTER = "[a-zA-Z]";
+	public static String REGEX_LETTER = "[a-zA-Z]";
 	private static String REGEX_UNDERLINE = "_";
 	private static String REGEX_LOGIC_OPERATOR = "!|&&|\\|\\|";
 	private static String REGEX_ARITHMETIC_OPERATOR = "\\+|-|\\*|/|\\+\\+|--";
-	private static String REGEX_RELATIONAL_OPERATOR = "!=|==|<|<=|>|>=|=";
+	public static String REGEX_RELATIONAL_OPERATOR = "!=|==|<|<=|>|>=|=";
 	private static String REGEX_DELIMITER = "\\;|\\,|\\(|\\)|\\[|\\]|\\{|\\}|\\.";
 	private static String REGEX_DELIMITERWITHOUTPOINT = "\\;|\\,|\\(|\\)|\\[|\\]|\\{|\\}";
 	private static ArrayList<String> KEYWORDS = new ArrayList<String>() {{
@@ -45,15 +45,6 @@ public class LexemeChecker {
 	    add("extends");
 	}};
 	
-	/**
-	 * Verifica se a entrada é um dígito válido.
-	 * 
-	 * @param input entrada a ser verificada
-	 * @return true, se o a entrada for um dígito; falso, caso contrário
-	 */
-	public static boolean isDigit(String input) {
-		return input.matches(REGEX_DIGIT);
-	}
 	
 	/**
 	 * Verifica se a entrada é um dígito válido.
@@ -74,7 +65,7 @@ public class LexemeChecker {
 	 */
 	public static boolean isNumberDelimiter(char character) {
 		String string = String.valueOf(character);
-		return character == '\n' || character == '\r' || character == ' ' || string.matches(REGEX_DELIMITER) || string.matches(REGEX_ARITHMETIC_OPERATOR) || string.matches(REGEX_RELATIONAL_OPERATOR) || string.matches(REGEX_LOGIC_OPERATOR);
+		return character == '\n' || character == '\r' || character == ' '  || character == System.lineSeparator().charAt(0) || string.matches(REGEX_DELIMITERWITHOUTPOINT) || string.matches(REGEX_ARITHMETIC_OPERATOR) || string.matches(REGEX_RELATIONAL_OPERATOR) || string.matches(REGEX_LOGIC_OPERATOR);
 	}
 
 	/**
@@ -96,7 +87,7 @@ public class LexemeChecker {
 	 */
 	public static boolean isIdentifierDelimiter(char character) {
 		String string = String.valueOf(character);
-		return character == '\n' || character == '\r' || character == ' ' || string.matches(REGEX_DELIMITER) || string.matches(REGEX_ARITHMETIC_OPERATOR);
+		return character == '\n' || character == '\r' || character == ' ' || string.matches(REGEX_DELIMITER) || string.matches(REGEX_RELATIONAL_OPERATOR) || string.matches(REGEX_LOGIC_OPERATOR) || string.matches(REGEX_DELIMITER) || string.matches(REGEX_ARITHMETIC_OPERATOR);
 	}
 	
 	/**
@@ -183,5 +174,13 @@ public class LexemeChecker {
 	public static boolean isKeyWord(String string) {
 		return KEYWORDS.contains(string);
 	}
-
+	
+	/**
+	 * 
+	 * @param character
+	 * @return
+	 */
+	public static boolean isSpaceOrLineBreak(char character) {
+		return character == 9 || character == 32 || character == 10 || character == 13 || character == System.lineSeparator().charAt(0);
+	}
 }

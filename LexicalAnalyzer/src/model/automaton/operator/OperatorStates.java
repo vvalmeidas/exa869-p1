@@ -4,7 +4,6 @@
 package model.automaton.operator;
 
 import model.automaton.State;
-import model.automaton.comment_delimiters.CommentDelimiterFinalStates;
 import util.LexemeChecker;
 
 /**
@@ -66,6 +65,8 @@ public enum OperatorStates implements State {
 		public State next(char character) {
 			if(character == '-') {
 				return CORRECT_OPERATOR_ARITHMETIC_STATE;
+			} else if(LexemeChecker.isDigit(character)){
+				return OperatorDeadState.NOT_OPERATOR_FINALSTATE;
 			}
 			
 			return OperatorFinalStates.CORRECT_OPERATOR_ARITHMETIC_FINALSTATE;
@@ -173,7 +174,7 @@ public enum OperatorStates implements State {
 				return CORRECT_OPERATOR_LOGIC_STATE;
 			}
 			
-			return OperatorDeadState.NOT_OPERATOR_FINALSTATE;
+			return OperatorFinalStates.BADLYFORMED_OPERATOR_LOGIC_FINALSTATE;
 		}
 	},
 	OPERATOR_OR_SYMBOL_STATE {
@@ -184,7 +185,7 @@ public enum OperatorStates implements State {
 				return CORRECT_OPERATOR_LOGIC_STATE;
 			}
 			
-			return OperatorDeadState.NOT_OPERATOR_FINALSTATE;
+			return OperatorFinalStates.BADLYFORMED_OPERATOR_LOGIC_FINALSTATE;
 		}
 	},
 	CORRECT_OPERATOR_ARITHMETIC_STATE {
@@ -218,4 +219,5 @@ public enum OperatorStates implements State {
 			return OperatorFinalStates.CORRECT_BLOCK_COMMENT_DELIMITER_FINALSTATE;
 		}
 	}
+
 }

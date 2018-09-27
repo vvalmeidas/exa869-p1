@@ -107,9 +107,9 @@ public class Lexer {
 					errors.add(new Error(getErrorDescription(finalState), lexeme.toString(), row));
 				} else {
 					if(isBlockComment) {
-						tokens.add(new Token(getTokenType(finalState), lexeme.toString(), blockComment));
+						//tokens.add(new Token(getTokenType(finalState), lexeme.toString(), blockComment));
 						isBlockComment = false;
-					} else {
+					} else if(!isCommentState(finalState)) {
 						tokens.add(new Token(getTokenType(finalState), lexeme.toString(), row));
 					}
 				}
@@ -119,10 +119,10 @@ public class Lexer {
 				startAutomatons();
 				lexeme = new StringBuilder();
 			} else if(isEveryAutomatonDead()) {
-				int unknownChar = (int) lexeme.toString().charAt(0);
+				char unknownChar = lexeme.toString().charAt(0);
 			
 				
-				if(unknownChar != 9 && unknownChar != 32 && unknownChar != 10 && unknownChar != 13 && unknownChar != System.lineSeparator().charAt(0)) {
+				if(!LexemeChecker.isSpaceOrLineBreak(unknownChar)) {
 					errors.add(new Error("Caractere desconhecido", lexeme.toString(), row));
 				}
 				
@@ -211,7 +211,9 @@ public class Lexer {
 			return state == NumberFinalStates.BADLYFORMEDNUMBER_FINALSTATE;
 		} else if(identifier.isFinalState()) {
 			return state == IdentifierFinalStates.BADLYFORMEDIDENTIFIER_FINALSTATE;
-		} 
+		} else if(operator.isFinalState()) {
+			return state == OperatorFinalStates.BADLYFORMED_OPERATOR_LOGIC_FINALSTATE;
+		}
 		
 		return false;
 	}
@@ -224,14 +226,28 @@ public class Lexer {
 	 */
 	private String getErrorDescription(State state) {
 		if(string.isFinalState()) {
-			return "Identificador mal formado";
+			return "Cadeia de caracteres mal formada";
 		} else if(number.isFinalState()) {
 			return "Numero mal formado";
 		} else if(identifier.isFinalState()) {
 			return "Identificador mal formado";
+		} else if(operator.isFinalState()) {
+			if(operator.getCurrentState() == OperatorFinalStates.BADLYFORMED_OPERATOR_LOGIC_FINALSTATE) {
+				return "Operador logico mal formado";
+			}
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * Checa se o estado em questão está relacionado a comentário
+	 * 
+	 * @param state estado em questão
+	 * @return true, se o estado for relacionado a comentário; false, caso contrário
+	 */
+	private boolean isCommentState(State state) {
+		return state == OperatorFinalStates.CORRECT_BLOCK_COMMENT_DELIMITER_FINALSTATE || state == OperatorFinalStates.CORRECT_COMMENT_DELIMITER_FINALSTATE; 
 	}
 	
 	/**
