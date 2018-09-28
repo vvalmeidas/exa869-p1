@@ -1,17 +1,23 @@
 package controller;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class FileController {
 	
-	public static final String INPUT_PATH = "entrada";
-	public static final String OUTPUT_PATH = "saida";
+	public static final String TEST_PATH = "teste";
 	
 	/**
 	 * Construtor privado
@@ -21,37 +27,46 @@ public class FileController {
 	/**
 	 * Realiza a leitura de todos os arquivos .txt presentes na pasta entrada.
 	 * @return Map no qual a chave é o nome do arquivo lido e o conteúdo é uma string do arquivo lido.
+	 * @throws IOException 
 	 */
-	public static Map<String, String> readFiles() {
+	public static Map<String, String> readFiles() throws IOException {		
+
+        
 		Map<String, String> result = new HashMap<>();
-		File dir = new File(INPUT_PATH);
+		File dir = new File(TEST_PATH);
 		
 		for(File file : dir.listFiles()) {
 			if(file.getName().endsWith(".txt")) {
-				try {
-					String fileString = new String(Files.readAllBytes(Paths.get(file.getPath())));
-					fileString = fileString + '\n';
-					result.put(file.getName(), fileString);
-				} catch (IOException e) {
-					e.printStackTrace();
+				BufferedReader bufferedReader  = new BufferedReader(
+				    new InputStreamReader(new FileInputStream(file),"ISO-8859-1"));
+
+				String line = bufferedReader.readLine();
+				String string = new String();
+				
+				while(line != null) {
+					string += line + System.lineSeparator();
+					line = bufferedReader.readLine();
 				}
+				
+				result.put(file.getName(), string);
 			}
 		}
 		
 		return result;
+		
 	}
 	
 	/**
 	 * Salva o resultado da análise léxica na pasta saida.
 	 * @param name nome do arquivo com o resultado da análise léxica
 	 * @param results resultados da análise léxica
+	 * @throws IOException 
 	 */
-	public static void saveFile(String name, String results) {
-		try {
-			Files.write(Paths.get(OUTPUT_PATH + "/resultado-" + name), results.getBytes(StandardCharsets.UTF_8));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public static void saveFile(String name, String results) throws IOException {
+	    FileWriter fileWriter = new FileWriter(TEST_PATH + "/saida-" + name);
+	    PrintWriter printWriter = new PrintWriter(fileWriter);
+	    printWriter.print(results);
+	    printWriter.close();
 	}
 	
 	

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package model.automaton.operator;
+package model.automaton.operator_comments;
 
 import model.automaton.DeadState;
 import model.automaton.State;

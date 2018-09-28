@@ -87,7 +87,7 @@ public class LexemeChecker {
 	 */
 	public static boolean isIdentifierDelimiter(char character) {
 		String string = String.valueOf(character);
-		return character == '\n' || character == '\r' || character == ' ' || string.matches(REGEX_DELIMITER) || string.matches(REGEX_RELATIONAL_OPERATOR) || string.matches(REGEX_LOGIC_OPERATOR) || string.matches(REGEX_DELIMITER) || string.matches(REGEX_ARITHMETIC_OPERATOR);
+		return character == '\n' || character == '\r' || character == ' ' || character == '"' || string.matches(REGEX_DELIMITER) || string.matches(REGEX_RELATIONAL_OPERATOR) || string.matches(REGEX_LOGIC_OPERATOR) || string.matches(REGEX_DELIMITER) || string.matches(REGEX_ARITHMETIC_OPERATOR);
 	}
 	
 	/**
@@ -162,7 +162,7 @@ public class LexemeChecker {
 	 * @return true, se o caractere for válido para token; falso, caso contrário
 	 */
 	public static boolean isValidForToken(char character) {
-		return !(character == ' ' || character == '\r' || character == '\n');
+		return !(character == ' ' || character == 9 || character == '\r' || character == '\n');
 	}
 	
 	/**
@@ -182,5 +182,19 @@ public class LexemeChecker {
 	 */
 	public static boolean isSpaceOrLineBreak(char character) {
 		return character == 9 || character == 32 || character == 10 || character == 13 || character == System.lineSeparator().charAt(0);
+	}
+	
+	/**
+	 * Verifica se o caractere é um delimitador de cadeia de caracteres
+	 * 
+	 * @param character caractere a ser analisado
+	 * @return true, se o caractere delimitador uma cadeia de caracteres; false, caso contrário
+	 */
+	public static boolean isStringDelimiter(char character) {
+		return character == System.lineSeparator().charAt(0) || character == '\r' || character == '\n';
+	}
+	
+	public static boolean isSpace(char character) {
+		return character == 9 || character == 32;
 	}
 }

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package model.automaton.operator;
+package model.automaton.operator_comments;
 
 import model.automaton.State;
 import util.LexemeChecker;

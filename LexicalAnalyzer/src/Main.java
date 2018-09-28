@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
@@ -6,7 +7,7 @@ import controller.FileController;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		Map<String, String> sourceFiles = FileController.readFiles();
 		Iterator<String> iSource = sourceFiles.keySet().iterator();
 		

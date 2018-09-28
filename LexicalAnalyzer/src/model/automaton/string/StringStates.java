@@ -34,16 +34,33 @@ public enum StringStates implements State {
 		@Override
 		public State next(char character) {
 
-			if(character == 92) { //se o caractere for \
-				return STRING_SPECIAL_SYMBOL_STATE;
-			} else if(LexemeChecker.isValidSymbol(character)) {
+			if(LexemeChecker.isValidSymbol(character)) {
 				return STRING_READING_STATE;
 			} else if(character == '"') {
 				return STRING_CLOSE_STATE;
+			} else if(character == '\\') {
+				return STRING_AFTER_PIPE_STATE;
+			} else if(LexemeChecker.isStringDelimiter(character)) {
+				return StringFinalStates.BADLYFORMED_STRING_FINALSTATE;
+			}
+				
+			return BADLYFORMED_STRING_STATE;
+		}
+		
+	},
+	STRING_AFTER_PIPE_STATE {
+
+		@Override
+		public State next(char character) {
+			if(LexemeChecker.isValidSymbol(character)) {
+				return STRING_READING_STATE;
+			} else if(character == '"') {
+				return STRING_SPECIAL_SYMBOL_STATE;
+			} else if(LexemeChecker.isStringDelimiter(character)) {
+				return StringFinalStates.BADLYFORMED_STRING_FINALSTATE;
 			}
 			
-			return StringFinalStates.BADLYFORMED_STRING_FINALSTATE;
-	
+			return BADLYFORMED_STRING_STATE;
 		}
 		
 	},
@@ -53,25 +70,13 @@ public enum StringStates implements State {
 		public State next(char character) {
 			if(LexemeChecker.isValidSymbol(character)) {
 				return STRING_READING_STATE;
+			} else if(LexemeChecker.isStringDelimiter(character) || LexemeChecker.isStringDelimiter(character)) {
+				return StringFinalStates.CORRECT_STRING_FINALSTATE;
 			} else if(character == '"') {
-				return STRING_AFTER_SPECIAL_SYMBOL_STATE;
-			}
-			
-			return StringFinalStates.BADLYFORMED_STRING_FINALSTATE;
-		}
-		
-	},
-	STRING_AFTER_SPECIAL_SYMBOL_STATE {
-
-		@Override
-		public State next(char character) {
-			if(LexemeChecker.isValidSymbol(character)) {
-				return STRING_READING_STATE;
-			} else if(character == '"' || character == ' ' || character == 92 || character == '\r' || character == '\n') {
 				return STRING_CLOSE_STATE;
 			}
 			
-			return StringFinalStates.BADLYFORMED_STRING_FINALSTATE;
+			return BADLYFORMED_STRING_STATE;
 		}
 		
 	},
@@ -80,6 +85,19 @@ public enum StringStates implements State {
 		@Override
 		public State next(char character) {
 			return StringFinalStates.CORRECT_STRING_FINALSTATE;
+		}
+		
+	}, 
+	BADLYFORMED_STRING_STATE {
+
+		@Override
+		public State next(char character) {
+			
+			if(LexemeChecker.isStringDelimiter(character)) {
+				return StringFinalStates.BADLYFORMED_STRING_FINALSTATE;
+			}
+			
+			return BADLYFORMED_STRING_STATE;
 		}
 		
 	}

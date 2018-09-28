@@ -6,7 +6,7 @@ package model.automaton;
 import model.automaton.delimiters.DelimitersStates;
 import model.automaton.identifier.IdentifierStates;
 import model.automaton.number.NumberStates;
-import model.automaton.operator.OperatorStates;
+import model.automaton.operator_comments.OperatorStates;
 import model.automaton.string.StringStates;
 
 /**
