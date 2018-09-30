@@ -24,6 +24,7 @@ import util.LexemeChecker;
  */
 
 /**
+ * Classe que implementa os principais métodos para realização da análise léxica.
  *
  * @author Nadine Cerqueira
  * @author Valmir Vinicius
@@ -39,12 +40,18 @@ public class Lexer {
 	private List<Token> tokens = new LinkedList<Token>();
 	private List<Error> errors = new LinkedList<Error>();
 	
-	
+	/**
+	 * Obtém uma instância dessa classe
+	 */
 	public Lexer() {
 		startAutomatons();
 	}
 
-	
+	/**
+	 * Realiza a análise léxica
+	 * 
+	 * @param source string contendo o programa fonte
+	 */
 	public void initialize(String source) {
 		char[] sourceChar = source.toCharArray();
 		int row = 1;
@@ -87,37 +94,41 @@ public class Lexer {
 			}
 			
 			if(theresAnyFinalState()) {
-				char lastChar = lexeme.toString().charAt(lexeme.length() - 1);
-				
-				if(lastChar == '\n') {
-					row--;
-				} 
-				
-				lexeme.deleteCharAt(lexeme.length() - 1);
-				
-				i--;
-				
-				if(identifier.isFinalState() && LexemeChecker.isKeyWord(lexeme.toString())) {
-					identifier.setCurrentState(IdentifierFinalStates.CORRECTIDENTIFIER_KEYWORD_FINALSTATE);
-				}
-				
-				State finalState = getTheFinalState();
-				
-				if(isErrorState(finalState)) {
-					errors.add(new Error(getErrorDescription(finalState), lexeme.toString(), row));
-				} else {
-					if(isBlockComment) {
-						//tokens.add(new Token(getTokenType(finalState), lexeme.toString(), blockComment));
-						isBlockComment = false;
-					} else if(!isCommentState(finalState)) {
-						tokens.add(new Token(getTokenType(finalState), lexeme.toString(), row));
+				if(!(operator.isFinalState() && operator.getCurrentState().toString().equals("CORRECT_OPERATOR_ARITHMETIC_FINALSTATE") && !number.isDeadState())) {
+					char lastChar = lexeme.toString().charAt(lexeme.length() - 1);
+					
+					if(lastChar == '\n') {
+						row--;
+					} 
+					
+					lexeme.deleteCharAt(lexeme.length() - 1);
+					
+					i--;
+					
+					if(identifier.isFinalState() && LexemeChecker.isKeyWord(lexeme.toString())) {
+						identifier.setCurrentState(IdentifierFinalStates.CORRECTIDENTIFIER_KEYWORD_FINALSTATE);
+					} 
+					
+					State finalState = getTheFinalState();
+					
+					if(isErrorState(finalState)) {
+						errors.add(new Error(getErrorDescription(finalState), lexeme.toString(), row));
+					} else {
+						if(isBlockComment) {
+							//tokens.add(new Token(getTokenType(finalState), lexeme.toString(), blockComment));
+							isBlockComment = false;
+						} else if(!isCommentState(finalState)) {
+							tokens.add(new Token(getTokenType(finalState), lexeme.toString(), row));
+						}
 					}
-				}
 
-				
-				//System.out.println(getTheFinalState() + " L" + String.valueOf(row) + "   " +  lexeme.toString());
-				startAutomatons();
-				lexeme = new StringBuilder();
+					
+					//System.out.println(getTheFinalState() + " L" + String.valueOf(row) + "   " +  lexeme.toString());
+					startAutomatons();
+					lexeme = new StringBuilder();
+				} else {
+					operator.setCurrentState(OperatorDeadState.NOT_OPERATOR_FINALSTATE);
+				}
 			} else if(isEveryAutomatonDead()) {
 				char unknownChar = lexeme.toString().charAt(0);
 			
@@ -131,7 +142,6 @@ public class Lexer {
 			}
 			
 			if(i == sourceChar.length-1) {
-				System.out.println(operator.getCurrentState().toString());
 				if(operator.getCurrentState().toString().equals("OPERATOR_BLOCK_COMMENT_LOOP_STATE")) {
 					//comentário de bloco mal formado
 					errors.add(new Error("Comentário de bloco mal formado", lexeme.toString(), blockComment));
@@ -141,8 +151,8 @@ public class Lexer {
 			
 		}
 		
-		System.out.println(tokens.toString());
-		System.out.println(errors.toString());
+		//System.out.println(tokens.toString());
+		//System.out.println(errors.toString());
 
 		System.out.println("Arquivo terminou");
 	

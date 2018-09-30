@@ -38,7 +38,7 @@ public class Error {
 	 * Obtém uma string com os atributos da classe.
 	 */
 	public String toString() {
-		return description + ": '" + value + "' em linha " + row + System.lineSeparator();
+		return description + " na linha " + row + ": '" + value + "'" + System.lineSeparator();
 	}
 
 }

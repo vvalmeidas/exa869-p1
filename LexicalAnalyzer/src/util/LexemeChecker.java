@@ -176,6 +176,7 @@ public class LexemeChecker {
 	}
 	
 	/**
+	 * Verifica se o caractere é um espaço ou quebra de linha
 	 * 
 	 * @param character
 	 * @return
@@ -194,6 +195,12 @@ public class LexemeChecker {
 		return character == System.lineSeparator().charAt(0) || character == '\r' || character == '\n';
 	}
 	
+	/**
+	 * Verifica se o caractere é um espaço
+	 * 
+	 * @param character caractere a ser analisado
+	 * @return true, se o caractere for um espaço; false, caso contrário
+	 */
 	public static boolean isSpace(char character) {
 		return character == 9 || character == 32;
 	}

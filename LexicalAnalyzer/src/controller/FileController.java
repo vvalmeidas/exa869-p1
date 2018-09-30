@@ -63,7 +63,7 @@ public class FileController {
 	 * @throws IOException 
 	 */
 	public static void saveFile(String name, String results) throws IOException {
-	    FileWriter fileWriter = new FileWriter(TEST_PATH + "/saida-" + name);
+	    FileWriter fileWriter = new FileWriter(TEST_PATH + "/saida/saida-" + name);
 	    PrintWriter printWriter = new PrintWriter(fileWriter);
 	    printWriter.print(results);
 	    printWriter.close();

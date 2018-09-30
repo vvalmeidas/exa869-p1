@@ -51,7 +51,7 @@ public enum NumberStates implements State {
 
 		@Override
 		public State next(char character) {
-			if(character == ' ') {
+			if(LexemeChecker.isSpace(character)) {
 				return NEGATIVESPACES_STATE;
 			} else if(LexemeChecker.isDigit(character)) {
 				return DIGIT_STATE;
